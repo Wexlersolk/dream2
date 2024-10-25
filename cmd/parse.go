@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -40,4 +41,16 @@ func parseScore(scoreStr string) (int, error) {
 		return 0, errors.New("invalid score format")
 	}
 	return score, nil
+}
+
+func parseTask(taskLine string) (bool, string, error) {
+	// Check for task completion status and extract description
+	if !(strings.HasPrefix(taskLine, "* [ ] |") || strings.HasPrefix(taskLine, "* [X] |")) {
+		return false, "", errors.New("invalid task format")
+	}
+
+	completed := strings.Contains(taskLine, "[X]")                     // True if the task is completed
+	taskDesc := strings.TrimSpace(strings.SplitN(taskLine, "|", 2)[1]) // Get the task description
+
+	return completed, taskDesc, nil
 }
