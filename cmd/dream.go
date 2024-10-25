@@ -24,6 +24,8 @@ const (
 type config struct {
 	readFilePath  string
 	writeFilePath string
+	graphFilePath string
+	daysToDisplay int
 	Operation     ""
 }
 
@@ -49,6 +51,8 @@ func run(cfg config) error {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	drawDreams(&cfg)
 
 	return nil
 }

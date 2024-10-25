@@ -20,36 +20,30 @@ func readFile(readFilePath string) ([]Dream, error) {
 }
 
 func writeFile(writeFilePath string, newDreams []Dream) error {
-	// Open the file in read/write mode
+
 	file, err := os.OpenFile(writeFilePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
 
-	// Read existing dreams
 	var existingDreams []Dream
 	if err := json.NewDecoder(file).Decode(&existingDreams); err != nil && err != io.EOF {
-		return err // Handle the EOF error separately
+		return err
 	}
 
-	// Concatenate new and existing dreams
 	updatedDreams := concatenateDreams(newDreams, existingDreams)
 
-	// Seek to the beginning of the file to overwrite it
 	if _, err := file.Seek(0, 0); err != nil {
 		return err
 	}
 
-	// Truncate the file to remove old data
 	if err := file.Truncate(0); err != nil {
 		return err
 	}
 
-	// Sort the updated dreams
 	sortDreams(updatedDreams)
 
-	// Write the updated dreams back to the file
 	encoder := json.NewEncoder(file)
 	encoder.SetIndent("", "    ")
 	if err := encoder.Encode(updatedDreams); err != nil {
@@ -84,4 +78,3 @@ func concatenateDreams(newDreams []Dream, existingDreams []Dream) []Dream {
 	updatedDreams = append(updatedDreams, newDreams...)
 	return updatedDreams
 }
-
