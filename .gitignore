@@ -5,6 +5,7 @@ tmp
 .version
 Makefile
 bin/
+.gitignore
 
 # Logs
 logs
