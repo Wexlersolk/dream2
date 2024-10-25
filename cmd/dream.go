@@ -52,7 +52,5 @@ func run(cfg config) error {
 		log.Fatal(err)
 	}
 
-	drawDreams(&cfg)
-
 	return nil
 }
