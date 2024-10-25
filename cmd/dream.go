@@ -2,18 +2,53 @@ package main
 
 import (
 	"errors"
+	"log"
 	"time"
 )
 
 type Dream struct {
-	score int
-	day   time.Time
-	tasks []string
+	Score   int
+	Weekday time.Weekday
+	Date    time.Time
+	Tasks   map[string]bool
 }
 
-func NewDream(score int, day time.Time, tasks []string) (*Dream, error) {
+type Operation string
+
+const (
+	Right Operation = "Right"
+	Left  Operation = "Left"
+	None  Operation = ""
+)
+
+type config struct {
+	readFilePath  string
+	writeFilePath string
+	Operation     ""
+}
+
+func NewDream(score int, date time.Time, tasks map[string]bool) (*Dream, error) {
 	if score < 0 || score > 10 {
 		return nil, errors.New("score must be between 0 and 10")
 	}
-	return &Dream{score: score, day: day, tasks: tasks}, nil
+	return &Dream{
+		Score:   score,
+		Date:    date,
+		Weekday: date.Weekday(),
+		Tasks:   tasks,
+	}, nil
+}
+
+func run(cfg config) error {
+	dreams, err := readFile(cfg.readFilePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = writeFile(cfg.writeFilePath, dreams)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
 }

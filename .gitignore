@@ -6,7 +6,7 @@ tmp
 Makefile
 bin/
 .gitignore
-
+file/
 # Logs
 logs
 *.log
