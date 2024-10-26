@@ -26,7 +26,7 @@ type config struct {
 	writeFilePath string
 	graphFilePath string
 	daysToDisplay int
-	Operation     ""
+	Operation
 }
 
 func NewDream(score int, date time.Time, tasks map[string]bool) (*Dream, error) {
@@ -47,9 +47,21 @@ func run(cfg config) error {
 		log.Fatal(err)
 	}
 
-	err = writeFile(cfg.writeFilePath, dreams)
+	allDreams, err := writeFile(cfg.writeFilePath, dreams)
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if cfg.Operation != None {
+		changedDreams, err := changefileDreams(allDreams, dreams, cfg)
+		if err != nil {
+			log.Fatal(err)
+		}
+		_, err = writeFile(cfg.writeFilePath, changedDreams)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 	}
 
 	return nil
