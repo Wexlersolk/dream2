@@ -16,6 +16,7 @@ func main() {
 	cfg := config{
 		readFilePath:  env.GetString("READ_FILE_PATH", "/home/wexlersolk/work/dream2/file/Week.wiki"),
 		writeFilePath: env.GetString("WRITE_FILE_PATH", "/home/wexlersolk/work/dream2/file/dream.json"),
+		testFile:      env.GetString("WRITE_FILE_PATH", "/home/wexlersolk/work/dream2/file/test.json"),
 		graphFilePath: env.GetString("GRAPH_FILE_PATH", "/home/wexlersolk/work/dream2/file/graph.png"),
 		daysToDisplay: env.GetInt("DAYS_TO_DISPLAY", 100),
 		Operation:     Operation(*operation),
