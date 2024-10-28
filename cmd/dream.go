@@ -24,6 +24,7 @@ const (
 type config struct {
 	readFilePath  string
 	writeFilePath string
+	testWriteFile string
 	testFile      string
 	graphFilePath string
 	daysToDisplay int
@@ -61,7 +62,8 @@ func run(cfg config) error {
 		if err != nil {
 			log.Fatal(err)
 		}
-		_, err = writeFile(cfg.testFile, changedDreams)
+
+		err = encodeDreams(changedDreams, cfg.testWriteFile)
 		if err != nil {
 			log.Fatal(err)
 		}
