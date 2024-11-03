@@ -1,5 +1,5 @@
 
-## Boook Bytes
+## Dream
 
 This is a project for personal use, that allows me to save different states of a file and eazily change between them. Execution commands are structured in a way that it is eazy to bind them to keymaps with your windw manager
 
